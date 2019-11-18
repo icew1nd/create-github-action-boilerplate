@@ -13,7 +13,7 @@ function copyFiles(projectName, spinner) {
 
 function rewriteFile(projectName, spinner) {
   try {
-    var pkgjson = fs.readFileSync(
+    let pkgjson = fs.readFileSync(
       process.cwd() + "/" + projectName + "/package.json",
       "utf8"
     );
@@ -22,6 +22,15 @@ function rewriteFile(projectName, spinner) {
       process.cwd() + "/" + projectName + "/package.json",
       pkgjson
     );
+
+    let readme = fs.readFileSync(
+      process.cwd() + "/" + projectName + "/README.md",
+      "utf8"
+    );
+    readme = readme.replace("Hello world javascript action", projectName);
+    readme = readme.replace("hello-world-javascript-action", projectName);
+    fs.writeFileSync(process.cwd() + "/" + projectName + "/README.md", readme);
+
     spinner.succeed("Rewrote files");
   } catch (err) {
     console.log("i am here", err);
@@ -40,16 +49,20 @@ function install(projectName, spinner) {
 
 function main() {
   const projectName = process.argv[2];
-  const spinner = ora("Copying files").start();
-  copyFiles(projectName, spinner);
-  rewriteFile(projectName, spinner);
-  spinner.text = "Rewriting files";
-  install(projectName, spinner);
-  spinner.text = "Installing dependencies";
+  if (!projectName) {
+    console.error("Project name empty");
+  } else {
+    const spinner = ora("Copying files").start();
+    copyFiles(projectName, spinner);
+    rewriteFile(projectName, spinner);
+    spinner.text = "Rewriting files";
+    install(projectName, spinner);
+    spinner.text = "Installing dependencies";
 
-  spinner.succeed("You're all set!");
-  console.log("\nYour new action is located in:");
-  console.log("\ncd " + projectName + "\n\n\n\n\n");
+    spinner.succeed("You're all set!");
+    console.log("\nYour new action is located in:");
+    console.log("\ncd " + projectName + "\n\n\n\n\n");
+  }
 }
 
 main();
