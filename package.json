@@ -1,16 +1,27 @@
 {
-  "name": "test-action",
+  "name": "create-github-action",
   "version": "1.0.0",
-  "description": "",
+  "description": "Creates a boilerplate github action",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@actions/core": "^1.2.0",
-    "@actions/github": "^1.1.0"
-  }
+    "fs-extra": "^8.1.0",
+    "ora": "^4.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icew1nd/test-action.git"
+  },
+  "keywords": [
+    "github"
+  ],
+  "author": "Thomas Kjær-Rasmussen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/icew1nd/test-action/issues"
+  },
+  "homepage": "https://github.com/icew1nd/test-action#readme"
 }

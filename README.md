@@ -1,21 +1,27 @@
-# Hello world javascript action
+# Create-github-action-boilerplate
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+Simple script that creates a boilerplate github action project
 
-## Inputs
+## Usage
 
-### `who-to-greet`
+```
+npx run create-github-action my-action
+cd my-action
+```
 
-**Required** The name of the person to greet. Default `"World"`.
+From there add it github by
 
-## Outputs
+```
+git init
+git add .
+git commit -m init
+git push --set-upstream origin/master
+```
 
-### `time`
+## Usage
 
-The time we greeted you.
-
-## Example usage
-
-uses: actions/hello-world-javascript-action@v1
-with:
-who-to-greet: 'Mona the Octocat'
+```- name: Hello world
+      uses: actions/my-action@v1
+      with:
+        who-to-greet: 'Mona the Octocat'
+```
