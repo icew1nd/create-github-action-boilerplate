@@ -1,6 +1,9 @@
-const fs = require("fs-extra");
-const child_process = require("child_process");
-const ora = require("ora");
+#!/usr/bin/env node
+"use strict";
+
+var fs = require("fs-extra");
+var child_process = require("child_process");
+var ora = require("ora");
 
 function copyFiles(projectName, spinner) {
   try {
@@ -13,7 +16,7 @@ function copyFiles(projectName, spinner) {
 
 function rewriteFile(projectName, spinner) {
   try {
-    let pkgjson = fs.readFileSync(
+    var pkgjson = fs.readFileSync(
       process.cwd() + "/" + projectName + "/package.json",
       "utf8"
     );
@@ -23,7 +26,7 @@ function rewriteFile(projectName, spinner) {
       pkgjson
     );
 
-    let readme = fs.readFileSync(
+    var readme = fs.readFileSync(
       process.cwd() + "/" + projectName + "/README.md",
       "utf8"
     );
@@ -33,7 +36,6 @@ function rewriteFile(projectName, spinner) {
 
     spinner.succeed("Rewrote files");
   } catch (err) {
-    console.log("i am here", err);
     spinner.fail(err);
   }
 }
@@ -48,11 +50,11 @@ function install(projectName, spinner) {
 }
 
 function main() {
-  const projectName = process.argv[2];
+  var projectName = process.argv[2];
   if (!projectName) {
     console.error("Project name empty");
   } else {
-    const spinner = ora("Copying files").start();
+    var spinner = ora("Copying files").start();
     copyFiles(projectName, spinner);
     rewriteFile(projectName, spinner);
     spinner.text = "Rewriting files";
