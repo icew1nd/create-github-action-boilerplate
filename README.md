@@ -5,8 +5,14 @@ Creates a boilerplate github action ready to be published - based off [Githubs o
 ## Quick overview
 
 ```
-npx create-github-action my-action
-cd my-action
+npx create-github-action-boilerplate my-action
+```
+
+OR
+
+```
+npm i create-github-action-boilerplate -g
+create-github-action-boilerplate my-action
 ```
 
 From there add it github by
