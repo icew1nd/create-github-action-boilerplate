@@ -55,7 +55,11 @@ function rewriteFile(projectName, userName, spinner) {
 function install(projectName, spinner) {
   try {
     child_process.execSync(
-      "npm i --prefix " + process.cwd() + "/" + projectName
+      "npm i --prefix " +
+        process.cwd() +
+        "/" +
+        projectName +
+        " --loglevel=error"
     );
     spinner.succeed("Installed dependencies");
   } catch (err) {}
