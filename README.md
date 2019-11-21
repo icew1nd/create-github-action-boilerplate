@@ -15,7 +15,7 @@ npm i create-github-action-boilerplate -g
 create-github-action-boilerplate my-action
 ```
 
-From there add it github by
+Then add it to GitHub by
 
 ```
 git init
