@@ -1,6 +1,6 @@
 {
   "name": "create-github-action-boilerplate",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Creates a boilerplate github action",
   "main": "index.js",
   "bin": "index.js",
