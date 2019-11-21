@@ -14,7 +14,7 @@ function copyFiles(projectName, spinner) {
   }
 }
 
-function rewriteFile(projectName, spinner) {
+function rewriteFile(projectName, userName, spinner) {
   try {
     var pkgjson = fs.readFileSync(
       process.cwd() + "/" + projectName + "/package.json",
@@ -30,9 +30,21 @@ function rewriteFile(projectName, spinner) {
       process.cwd() + "/" + projectName + "/README.md",
       "utf8"
     );
+
+    readme = readme.replace("actions/", userName + "/");
     readme = readme.replace("Hello world javascript action", projectName);
     readme = readme.replace("hello-world-javascript-action", projectName);
     fs.writeFileSync(process.cwd() + "/" + projectName + "/README.md", readme);
+
+    var actionyml = fs.readFileSync(
+      process.cwd() + "/" + projectName + "/action.yml",
+      "utf8"
+    );
+    actionyml = actionyml.replace("Hello World", projectName);
+    fs.writeFileSync(
+      process.cwd() + "/" + projectName + "/action.yml",
+      actionyml
+    );
 
     spinner.succeed("Rewrote files");
   } catch (err) {
@@ -50,21 +62,32 @@ function install(projectName, spinner) {
 }
 
 function main() {
-  var projectName = process.argv[2];
-  if (!projectName) {
-    console.error("Project name empty");
-  } else {
-    var spinner = ora("Copying files").start();
-    copyFiles(projectName, spinner);
-    rewriteFile(projectName, spinner);
-    spinner.text = "Rewriting files";
-    install(projectName, spinner);
-    spinner.text = "Installing dependencies";
+  var standard_input = process.stdin;
+  standard_input.setEncoding("utf-8");
 
-    spinner.succeed("You're all set!");
-    console.log("\nYour new action is located in:");
-    console.log("\ncd " + projectName + "\n\n\n\n\n");
-  }
+  console.log("Put in your GitHub username and press enter");
+
+  standard_input.on("data", function(userName) {
+    if (userName === "exit\n") {
+      process.exit();
+    } else {
+      var projectName = process.argv[2];
+      if (!projectName) {
+        console.error("Project name empty");
+      } else {
+        var spinner = ora("Copying files").start();
+        copyFiles(projectName, spinner);
+        rewriteFile(projectName, userName, spinner);
+        spinner.text = "Rewriting files";
+        install(projectName, spinner);
+        spinner.text = "Installing dependencies";
+
+        spinner.succeed("You're all set!");
+        console.log("\nYour new action is located in:");
+        console.log("\ncd " + projectName + "\n\n\n\n\n");
+      }
+    }
+  });
 }
 
 main();

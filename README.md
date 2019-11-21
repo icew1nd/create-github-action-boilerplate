@@ -5,7 +5,7 @@ Creates a boilerplate github action ready to be published - based off [Githubs o
 ## Quick overview
 
 ```
-npx run create-github-action my-action
+npx create-github-action my-action
 cd my-action
 ```
 
@@ -23,8 +23,38 @@ From there go to your repository on github and click "Publish this action to mar
 
 ### Use in workflow
 
-```- name: Hello world
-      uses: actions/my-action@v1
+#### Public market place
+
+```
+    - name: Hello world
+      uses: *your-github-handle*/my-action@v1
       with:
         who-to-greet: 'Mona the Octocat'
 ```
+
+#### Private action
+
+For private actions you will need to place your action within the repository that it's going to be used in under:
+
+`/.github/actions/`
+
+```
+|-- hello-world (repository)
+|   |__ .github
+|       └── workflows
+|           └── my-first-workflow.yml
+|       └── actions
+|           |__ hello-world-action
+|               └── action.yml
+```
+
+and then from your work flow
+
+```
+    - name: Hello world
+      uses: ./.github/actions/hello-world-action
+      with:
+        who-to-greet: 'Mona the Octocat'
+```
+
+You can read more from the official documentation [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#referencing-actions-in-your-workflow).
